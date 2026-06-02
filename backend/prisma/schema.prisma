@@ -1,0 +1,276 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum PublishStatus {
+  draft
+  review
+  published
+}
+
+enum CampaignStatus {
+  draft
+  active
+  completed
+}
+
+enum PartnerType {
+  corporate
+  media
+  ngo
+  community
+}
+
+enum ReviewerRole {
+  volunteer
+  partner
+  participant
+}
+
+enum RequestType {
+  volunteer
+  financial_support
+  partnership
+}
+
+enum UserRole {
+  admin
+  editor
+}
+
+enum CommentMediaType {
+  image
+  gif
+}
+
+enum CommentReactionType {
+  heart
+  thumbs_up
+  eyes
+  melt
+  question
+}
+
+model Campaign {
+  id           Int            @id @default(autoincrement())
+  slug         String         @unique
+  title        String
+  shortDesc    String
+  content      String
+  monoJarId    String?        @unique
+  monoJarUrl   String
+  goalAmount   Decimal        @db.Decimal(14, 2)
+  raisedAmount Decimal        @default(0) @db.Decimal(14, 2)
+  currency     String         @default("UAH")
+  status       CampaignStatus @default(active)
+  isFeatured   Boolean        @default(false)
+  coverImage   String?
+  publishedAt  DateTime?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  snapshots CampaignProgressSnapshot[]
+}
+
+model CampaignProgressSnapshot {
+  id         Int      @id @default(autoincrement())
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  campaignId Int
+  balance    Decimal  @db.Decimal(14, 2)
+  goal       Decimal  @db.Decimal(14, 2)
+  percent    Decimal  @db.Decimal(5, 2)
+  fetchedAt  DateTime @default(now())
+
+  @@index([campaignId, fetchedAt])
+}
+
+model Partner {
+  id          Int         @id @default(autoincrement())
+  name        String
+  type        PartnerType @default(ngo)
+  logoUrl     String?
+  websiteUrl  String?
+  description String?
+  sortOrder   Int         @default(0)
+  isActive    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+}
+
+model Faq {
+  id        Int      @id @default(autoincrement())
+  question  String
+  answer    String
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Case {
+  id              Int           @id @default(autoincrement())
+  slug            String        @unique
+  title           String
+  summary         String
+  content         String
+  beneficiaryName String?
+  location        String?
+  resultText      String?
+  coverImage      String?
+  status          PublishStatus @default(published)
+  publishedAt     DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model Post {
+  id          Int           @id @default(autoincrement())
+  slug        String        @unique
+  title       String
+  excerpt     String
+  content     String
+  coverImage  String?
+  status      PublishStatus @default(draft)
+  publishedAt DateTime?
+  authorId    Int?
+  updatedById Int?
+  deletedAt   DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  author      User?         @relation("PostAuthor", fields: [authorId], references: [id])
+  updatedBy   User?         @relation("PostUpdater", fields: [updatedById], references: [id])
+}
+
+model Report {
+  id          Int           @id @default(autoincrement())
+  slug        String        @unique
+  title       String
+  summary     String
+  periodStart DateTime
+  periodEnd   DateTime
+  totalIn     Decimal       @db.Decimal(14, 2)
+  totalOut    Decimal       @db.Decimal(14, 2)
+  pdfUrl      String?
+  status      PublishStatus @default(published)
+  publishedAt DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model Activity {
+  id          Int      @id @default(autoincrement())
+  value       String
+  label       String
+  sortOrder   Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model HelpOption {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  ctaText     String
+  requestType RequestType
+  sortOrder   Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Review {
+  id        Int          @id @default(autoincrement())
+  name      String
+  text      String
+  role      ReviewerRole @default(volunteer)
+  isActive  Boolean      @default(true)
+  createdAt DateTime     @default(now())
+}
+
+model Comment {
+  id               Int      @id @default(autoincrement())
+  authorName       String
+  authorEmail      String?
+  actorId          String
+  content          String
+  mediaUrl         String?
+  mediaType        CommentMediaType?
+  depth            Int      @default(0)
+  isEdited         Boolean  @default(false)
+  isDeleted        Boolean  @default(false)
+  deletedAt        DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  parentId         Int?
+  parent           Comment? @relation("CommentReplies", fields: [parentId], references: [id], onDelete: SetNull)
+  replies          Comment[] @relation("CommentReplies")
+  reactions        CommentReaction[]
+
+  @@index([parentId, createdAt])
+  @@index([actorId, createdAt])
+  @@index([isDeleted, createdAt])
+}
+
+model CommentReaction {
+  id         Int                 @id @default(autoincrement())
+  commentId  Int
+  actorId    String
+  reaction   CommentReactionType
+  createdAt  DateTime            @default(now())
+  updatedAt  DateTime            @updatedAt
+  comment    Comment             @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([commentId, actorId])
+  @@index([reaction, createdAt])
+}
+
+model CommentActorSession {
+  id             Int      @id @default(autoincrement())
+  actorId        String   @unique
+  displayName    String
+  email          String?
+  verificationCodeHash String?
+  verifiedAt     DateTime?
+  expiresAt      DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([expiresAt])
+}
+
+model Request {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String
+  phone        String?
+  message      String?
+  type         RequestType @default(volunteer)
+  createdAt    DateTime @default(now())
+  @@map("VolunteerRequest")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  role         UserRole
+  name         String
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  authoredPosts Post[]  @relation("PostAuthor")
+  updatedPosts  Post[]  @relation("PostUpdater")
+}
+
+model SiteSetting {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  valueJson Json
+  updatedAt DateTime @updatedAt
+}
