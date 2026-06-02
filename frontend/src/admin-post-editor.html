@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="uk-UA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Post Editor — Future Foundation</title>
+    <link rel="icon" type="image/x-icon" href="images/icons/favicon.ico" />
+          </head>
+  <body>
+    <main class="admin-wrap">
+      <section class="admin-card">
+        <div class="admin-toolbar">
+          <h1 id="admin-editor-title">Новий пост</h1>
+          <div class="admin-actions">
+            <a class="btn btn--secondary" href="admin-posts.html">До списку</a>
+            <button class="btn btn--secondary" id="admin-logout-btn" type="button">Вийти</button>
+          </div>
+        </div>
+
+        <form class="admin-form" id="admin-post-form">
+          <label for="post-title">Заголовок</label>
+          <input id="post-title" name="title" type="text" required />
+
+          <label for="post-slug">Slug</label>
+          <input id="post-slug" name="slug" type="text" placeholder="auto from title if empty" />
+
+          <label for="post-excerpt">Короткий опис</label>
+          <textarea id="post-excerpt" name="excerpt" rows="3" required></textarea>
+
+          <label for="post-content">Контент</label>
+          <textarea id="post-content" name="content" rows="10" required></textarea>
+
+          <label for="post-cover-file">Cover image (optional)</label>
+          <input
+            id="post-cover-file"
+            name="coverImageFile"
+            type="file"
+            accept="image/png,image/jpeg,image/webp,image/avif"
+          />
+          <p id="post-cover-file-status" class="admin-note"></p>
+          <div id="post-cover-preview-wrap" class="admin-note"></div>
+
+          <label for="post-status">Статус</label>
+          <select id="post-status" name="status">
+            <option value="draft">draft</option>
+            <option value="review">review</option>
+            <option value="published">published</option>
+          </select>
+
+          <div class="admin-actions">
+            <button class="btn btn--primary" type="submit">Зберегти</button>
+            <button class="btn btn--secondary" id="admin-delete-btn" type="button">Видалити</button>
+          </div>
+          <p id="admin-post-form-status" class="admin-note"></p>
+        </form>
+      </section>
+    </main>
+      </body>
+</html>

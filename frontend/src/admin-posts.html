@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="uk-UA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Адмін-панель, Пости — Future Foundation</title>
+    <link rel="icon" type="image/x-icon" href="images/icons/favicon.ico" />
+          </head>
+  <body>
+    <main class="admin-wrap">
+      <section class="admin-card admin-card--wide">
+        <a href="index.html" class="admin-back-link">
+          <img src="images/icons/arrow-left.png" alt="arrow left" class="admin-back-icon" />
+        </a>
+        <div class="admin-toolbar">
+          <h1>Пости</h1>
+          <div class="admin-actions">
+            <a class="btn btn--primary" href="admin-post-editor.html"
+              >Новий пост</a
+            >
+            <button
+              class="btn btn--secondary"
+              id="admin-logout-btn"
+              type="button"
+            >
+              Вийти
+            </button>
+          </div>
+        </div>
+
+        <div class="admin-toolbar">
+          <input
+            id="admin-post-search"
+            type="text"
+            placeholder="Пошук по заголовку"
+          />
+          <select id="admin-post-status-filter">
+            <option value="">Всі статуси</option>
+            <option value="draft">draft</option>
+            <option value="review">review</option>
+            <option value="published">published</option>
+          </select>
+          <button
+            class="btn btn--primary"
+            id="admin-post-filter-btn"
+            type="button"
+          >
+            Фільтрувати
+          </button>
+        </div>
+
+        <div class="admin-grid" id="admin-post-list"></div>
+        <p class="admin-note" id="admin-post-list-meta"></p>
+      </section>
+    </main>
+      </body>
+</html>

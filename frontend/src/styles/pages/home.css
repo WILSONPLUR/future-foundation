@@ -1,0 +1,15 @@
+.more {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn--more {
+    font-family: "eUkraineHead";
+    background-color: var(--black);
+    color: var(--white);
+    padding: 14px 60px;
+    width: fit-content;
+    margin-top: 20px;
+    text-align: center;
+}
