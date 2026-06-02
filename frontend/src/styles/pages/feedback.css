@@ -46,7 +46,7 @@
 
 .feedback-comment-form input:focus,
 .feedback-comment-form textarea:focus {
-  outline: 2px solid var(--yellow);
+  outline: 2px solid var(--black);
   border-color: var(--black);
 }
 
@@ -166,7 +166,7 @@
 }
 
 .comment-react-open:hover {
-  background: var(--yellow);
+  background: var(--white);
   color: var(--black);
 }
 
@@ -200,7 +200,7 @@
 }
 
 .comment-react-btn:hover {
-  background: var(--yellow);
+  background: var(--white);
   transform: scale(1.06);
 }
 
@@ -222,13 +222,13 @@
 }
 
 .comment-reaction-pill:hover {
-  background: var(--yellow);
+  background: var(--white);
   color: var(--black);
 }
 
 .comment-reaction-pill.is-active,
 .comment-react-btn.is-active {
-  background: var(--yellow);
+  background: var(--white);
   color: var(--black);
   border-color: var(--black);
 }
@@ -261,7 +261,7 @@
 }
 
 .comment-reply-form textarea:focus {
-  outline: 2px solid var(--yellow);
+  outline: 2px solid var(--black);
   border-color: var(--black);
 }
 

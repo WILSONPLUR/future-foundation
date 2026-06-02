@@ -212,7 +212,8 @@ a {
 }
 
 .nav__user-toggle:hover {
-  background: var(--yellow);
+  background: var(--black);
+  color: var(--white);
 }
 
 .nav__user-avatar {
@@ -513,7 +514,7 @@ a {
 }
 
 .btn--primary:hover {
-  background: var(--yellow);
+  background: var(--white);
   color: var(--black);
 }
 
@@ -848,7 +849,7 @@ a {
 .contacts__form input:focus,
 .contacts__form select:focus,
 .contacts__form textarea:focus {
-  outline: 2px solid var(--yellow);
+  outline: 2px solid var(--black);
   border-color: var(--black);
 }
 
