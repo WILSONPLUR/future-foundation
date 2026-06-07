@@ -8,7 +8,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const srcDir = path.resolve(__dirname, 'src');
 const outputDir = process.env.BUILD_OUTPUT_DIR
   ? path.resolve(__dirname, process.env.BUILD_OUTPUT_DIR)
-  : path.resolve(__dirname, '../docs');
+  : path.resolve(__dirname, './dist');
 const publicApiBase = process.env.FF_API_BASE || '';
 
 // Find all HTML files in src directory
