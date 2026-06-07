@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Allow: /llms.txt
+
+Disallow: /admin/
+Disallow: /admin-login.html
+Disallow: /admin-posts.html
+Disallow: /admin-post-editor.html
+Disallow: /api/auth/
+Disallow: /api/admin/
+

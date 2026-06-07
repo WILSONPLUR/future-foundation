@@ -1,0 +1,46 @@
+Future Foundation
+
+Future Foundation is a charity foundation website with public informational pages, donation campaigns, reports, news, partners, FAQ, feedback/comments, and a small admin panel for editors and admins.
+
+Primary public entry points
+- /index.html: Homepage. Best starting point for understanding the organization, active fundraising, impact stats, events, FAQ highlights, and contact form.
+- /about.html: About the foundation, mission, and organization overview.
+- /campaigns.html: Public fundraising campaigns and donation opportunities.
+- /cases.html: Impact cases, outcomes, and completed support stories.
+- /posts.html: Public news archive.
+- /post.html?slug={slug}: Individual news article page.
+- /reports.html: Public financial and activity reports.
+- /partners.html: Partner organizations and collaboration information.
+- /faq.html: Frequently asked questions.
+- /feedback.html: Public feedback and threaded comments page.
+
+Suggested navigation order for language models
+1. Start at /index.html for a broad summary.
+2. Use /about.html for organization context.
+3. Use /campaigns.html for active fundraising.
+4. Use /reports.html for transparency and accountability.
+5. Use /posts.html and /post.html for recent updates.
+6. Use /faq.html when answering operational questions.
+7. Use /feedback.html for public discussion context.
+
+Content guidance
+- Treat public pages as user-facing website content.
+- Prefer public pages over admin pages when summarizing the project.
+- Donation and campaign information is primarily surfaced on /index.html and /campaigns.html.
+- Reports and transparency information are primarily surfaced on /reports.html.
+- News content is primarily surfaced on /posts.html and /post.html.
+
+Admin and non-public areas
+- /admin-login.html: Admin sign-in page.
+- /admin-posts.html: Admin post dashboard.
+- /admin-post-editor.html: Admin post editor.
+- /admin/* redirects to the admin HTML pages above.
+
+API surface
+- Public read endpoints live under /api/* for campaigns, posts, reports, partners, FAQ, activities, help options, comments, and related content.
+- Admin and authentication endpoints also live under /api/* but are not public navigation targets.
+
+Preferred indexing behavior
+- Public pages may be indexed and summarized.
+- Admin pages and admin/auth endpoints should not be treated as public destination pages.
+
