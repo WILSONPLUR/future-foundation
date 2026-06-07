@@ -9,7 +9,7 @@ const srcDir = path.resolve(__dirname, 'src');
 const outputDir = process.env.BUILD_OUTPUT_DIR
   ? path.resolve(__dirname, process.env.BUILD_OUTPUT_DIR)
   : path.resolve(__dirname, './dist');
-const publicApiBase = process.env.FF_API_BASE || '';
+const publicApiBase = process.env.FF_API_BASE || process.env.API_BASE || '';
 
 // Find all HTML files in src directory
 const htmlFiles = fs.readdirSync(srcDir).filter(file => file.endsWith('.html'));
