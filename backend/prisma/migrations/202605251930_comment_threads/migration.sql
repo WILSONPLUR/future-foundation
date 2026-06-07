@@ -2,14 +2,53 @@
 -- This migration intentionally creates the full current schema so Render/Prisma
 -- can initialize a fresh database with `prisma migrate deploy`.
 
-CREATE TYPE "PublishStatus" AS ENUM ('draft', 'review', 'published');
-CREATE TYPE "CampaignStatus" AS ENUM ('draft', 'active', 'completed');
-CREATE TYPE "PartnerType" AS ENUM ('corporate', 'media', 'ngo', 'community');
-CREATE TYPE "ReviewerRole" AS ENUM ('volunteer', 'partner', 'participant');
-CREATE TYPE "RequestType" AS ENUM ('volunteer', 'financial_support', 'partnership');
-CREATE TYPE "UserRole" AS ENUM ('admin', 'editor');
-CREATE TYPE "CommentMediaType" AS ENUM ('image', 'gif');
-CREATE TYPE "CommentReactionType" AS ENUM ('heart', 'thumbs_up', 'eyes', 'melt', 'question');
+DO $$ BEGIN
+    CREATE TYPE "PublishStatus" AS ENUM ('draft', 'review', 'published');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE "CampaignStatus" AS ENUM ('draft', 'active', 'completed');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE "PartnerType" AS ENUM ('corporate', 'media', 'ngo', 'community');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE "ReviewerRole" AS ENUM ('volunteer', 'partner', 'participant');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE "RequestType" AS ENUM ('volunteer', 'financial_support', 'partnership');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE "UserRole" AS ENUM ('admin', 'editor');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE "CommentMediaType" AS ENUM ('image', 'gif');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE "CommentReactionType" AS ENUM ('heart', 'thumbs_up', 'eyes', 'melt', 'question');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
