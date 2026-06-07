@@ -1,5 +1,8 @@
 # Future Foundation
 
+
+![Alt Text](preview.png)
+
 Charity foundation website with:
 - public multi-page frontend
 - admin authentication and post management
