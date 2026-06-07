@@ -1,8 +1,20 @@
-const configuredApiBase =
-  (typeof __FF_API_BASE__ !== 'undefined' && __FF_API_BASE__) ||
-  window.FF_API_BASE ||
-  '';
-const API_BASE = configuredApiBase || `${window.location.protocol}//${window.location.hostname}:3000`;
+function getApiBase() {
+  const configuredApiBase =
+    (typeof __FF_API_BASE__ !== 'undefined' && __FF_API_BASE__) ||
+    window.FF_API_BASE ||
+    '';
+  const normalizedApiBase = String(configuredApiBase).trim().replace(/\/+$/, '');
+  if (normalizedApiBase) return normalizedApiBase;
+
+  const isLocalDevHost =
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1';
+  return isLocalDevHost
+    ? `${window.location.protocol}//${window.location.hostname}:3000`
+    : '';
+}
+
+const API_BASE = getApiBase();
 const AUTH_KEY = 'ff_admin_token';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const CONTROL_CHAR_RE = /[\u0000-\u001F\u007F]/;

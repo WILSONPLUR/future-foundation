@@ -11,20 +11,23 @@ const currentCampaignTitle = document.getElementById('current-campaign-title');
 const currentCampaignText = document.getElementById('current-campagin-text');
 const AUTH_STORAGE_KEY = 'ff_admin_token';
 
-const isLocalDevHost =
-  window.location.hostname === 'localhost' ||
-  window.location.hostname === '127.0.0.1';
+function getApiBase() {
+  const configuredApiBase =
+    (typeof __FF_API_BASE__ !== 'undefined' && __FF_API_BASE__) ||
+    window.FF_API_BASE ||
+    '';
+  const normalizedApiBase = String(configuredApiBase).trim().replace(/\/+$/, '');
+  if (normalizedApiBase) return normalizedApiBase;
 
-const configuredApiBase =
-  (typeof __FF_API_BASE__ !== 'undefined' && __FF_API_BASE__) ||
-  window.FF_API_BASE ||
-  '';
-
-const API_BASE =
-  configuredApiBase ||
-  (isLocalDevHost
+  const isLocalDevHost =
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1';
+  return isLocalDevHost
     ? `${window.location.protocol}//${window.location.hostname}:3000`
-    : `${window.location.protocol}//${window.location.hostname}`);
+    : '';
+}
+
+const API_BASE = getApiBase();
 let campaignsRefreshPromise = null;
 let publicAuthUser = null;
 
