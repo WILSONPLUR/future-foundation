@@ -236,9 +236,3 @@ Purpose:
 - help LLMs understand the public site structure
 - allow public pages
 - discourage crawling admin pages and admin/auth APIs
-
-## Notes
-
-- The frontend is not a SPA; each public/admin page is a separate HTML entry.
-- Local `docs/` is the generated static build output and can be deployed as plain static hosting.
-- If frontend and backend are hosted on different origins, `FF_API_BASE` and backend `ALLOWED_ORIGIN` must both be configured.
